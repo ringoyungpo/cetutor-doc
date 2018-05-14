@@ -520,6 +520,8 @@ Answer "1" *-- "1" Translation
 接下来用时序图和活动图来描述用户在应用中的一些操作
 
 ### 4.3.1 时序图
+网页端和移动端共同的时序图主要有以下两个：
+
 1. 注册
 ```puml
 actor 用户 as A
@@ -554,11 +556,11 @@ else 两次密码一致
 end
 ```
 
-2.登录
+2. 登录
 ```puml
 actor 用户 as A
 participant "登录页面" as B
-participant "注册Api" as C
+participant "登录Api" as C
 participant "User Collection" as D
 
 A -> B: 输入登录信息
@@ -581,6 +583,98 @@ else 邮箱存在
 	end
 end
 ```
+
+网页端特有的时序图主要有以下三个：
+
+1. 增加试卷
+```puml
+actor 用户 as A
+participant "试卷管理台页面" as B
+participant "试卷编辑界面" as C
+participant "新增试卷Api" as D
+participant "Paper Collection" as E
+
+A -> B: 点击新增试卷按钮
+B -> C: 跳转到试卷编辑界面
+A <-- C: 显示空白的试卷编辑界面
+A -> C: 输入试卷内容
+C -> D: 发送新增试卷请求
+D -> E: 保存试卷信息
+
+alt 新增试卷信息缺失或不合法
+	D <[#red]-- E : 返回相关错误信息
+	C <[#red]-- D : 返回错误信息
+	A <[#red]-- C: 提醒用户输入正确的信息
+else 保存成功
+	D <[#green]-- E: 返回保存成功信息
+	C <[#green]-- D: 返回保存成功信息
+	A <[#green]-- C: 保存成功，跳转到管理台页面
+end
+```
+
+2. 修改试卷
+```puml
+actor 用户 as A
+participant "试卷管理台页面" as B
+participant "试卷编辑界面" as C
+participant "修改试卷Api" as D
+participant "获取用户的所有试卷Api" as E
+participant "Paper Collection" as F
+
+
+A -> B: 进入管理台页面
+B -> E: 请求用户所有试卷
+E -> F: 查找该用户的所有试卷
+E <-- F: 返回该用户的所有试卷
+B <-- E: 返回用户所有试卷
+A <-- B: 现实用户所有的试卷
+
+A -> B: 点击所要编辑试卷
+B -> C: 跳转到试卷编辑界面
+A <-- C: 显示空白的试卷编辑界面
+A -> C: 输入试卷内容
+C -> D: 发送修改试卷请求
+D -> F: 保存试卷信息
+
+alt 修改试卷信息缺失或不合法
+	D <[#red]-- F : 返回相关错误信息
+	C <[#red]-- D : 返回错误信息
+	A <[#red]-- C: 提醒用户输入正确的信息
+else 保存成功
+	D <[#green]-- F: 返回保存成功信息
+	C <[#green]-- D: 返回保存成功信息
+	A <[#green]-- C: 保存成功，跳转到管理台页面
+end
+```
+
+3. 删除试卷
+```puml
+actor 用户 as A
+participant "试卷管理台页面" as B
+participant "获取用户的所有试卷Api" as C
+participant "删除试卷Api" as D
+participant "Paper Collection" as E
+
+A -> B: 进入管理台页面
+B -> C: 请求用户所有试卷
+C -> E: 查找该用户的所有试卷
+C <-- E: 返回该用户的所有试卷
+B <-- C: 返回用户所有试卷
+A <-- B: 现实用户所有的试卷
+
+A -> B: 点击所要删除试卷
+B -> D: 发送删除试卷请求
+D -> E: 删除试卷信息
+alt 所要删除试卷不存在
+	D <[#red]-- E : 返回相关错误信息
+	B <[#red]-- D : 返回错误信息
+else 删除成功
+	D <[#green]-- E: 返回保存成功信息
+	B <[#green]-- D: 返回保存成功信息
+end
+A <[#green]-- C: 刷新管理台信息
+```
+
 
 # 结论
 
