@@ -1,4 +1,4 @@
-# 基于 Android 的英语学习 APP 的开发
+# 基于 Android 的英语学习 APP 的开发 {ignore=true}
 
 **[摘要]** 全国大学英语考试，即 College English Test 是大学生在校期间才能参加的考试，主要分为 CET-4 和 CET-6 两种。通过这个考试的证书在大学生不论是找工作，还是考研，都有一定的帮助，并且可以使英语水平得到一定层次的进步。为了能够更好地准备这个考试，于是开发了一个基于 Android 的英语考试和练习 APP，能够方便用户随时随地做题和考试。并且为了使这个 Android APP 能够更好地运行，还开发了网页端用于题库管理。
 
@@ -6,11 +6,33 @@
 
 >
 
-# The Application of English Learning Based on Android
+# The Application of English Learning Based on Android {ignore=true}
 
 **[Abstract]** College English Test is only accept college student to take, which mainly include CET-4 and CET-6 levels.With passing this test, students will get more advance in getting a job or being Admitted for a graduate degree, furthermore, will make their english into the next level. For better preparing the College Englis Test, This Android based English learning App is developed, with this app, users can practice and test any time and any where. To make this app function, a website for exam management is developed.
 
 **[Key Word]** CET-4 CET-6 Test Practice Android
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+* [目录](#目录)
+* [第一章 引言](#第一章-引言)
+  _ [1.1 论文研究背景与意义](#11-论文研究背景与意义)
+  _ [1.2 本课题研究内容与目标](#12-本课题研究内容与目标)
+* [第二章 相关技术介绍](#第二章-相关技术介绍)
+  _ [2.1 React Native 简介](#21-react-native-简介)
+  _ [2.2 React 简介](#22-react-简介)
+  _ [2.3 Node.js 简介](#23-nodejs-简介)
+  _ [2.4 MongoDB 简介](#24-mongodb-简介)
+* [第三章 系统分析](#第三章-系统分析)
+  _ [3.1 应用场景](#31-应用场景)
+  _ [3.2 系统需求分析](#32-系统需求分析)
+* [结论](#结论)
+* [致谢语](#致谢语)
+* [参考文献](#参考文献)
+
+<!-- /code_chunk_output -->
 
 # 目录
 
@@ -73,6 +95,10 @@ MongoDB 是非关系型的数据库，这样就能够直接将较为复杂数据
 2.  能够对考卷进行练习，并及时反馈所选选项是否正确。
 3.  能够进行考试，其中听力只能听一次，考试结束后给出成绩和答题情况，并能够保存答题情况。
 4.  能够对过去做过的考卷及其答题情况进行查看和删除，其中考卷被修改或删除后，不能影响与该考卷相关的答题情况。
+
+## 3.2 系统需求分析
+
+系统除了较为常见的登陆注册外，最关键的是试卷的编辑，以及试卷的使用。为了实现试卷的编辑，必须要根据试卷的结构来进行分析建模，并根据模型特征来进行数据的操作。通过试卷的编辑，可以获得试卷的结构，根据试卷的结构，可以将其进行展示，并新建出含有答题卡的数据模型，这样能够较好地对数据进行操作。为了能够更好地帮助到用户，需要对答题后进行保存，并且能够进行管理。
 
 # 结论
 
