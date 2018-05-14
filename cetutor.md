@@ -31,6 +31,8 @@
 		* [3.2.1 系统用例](#321-系统用例)
 		* [3.2.2 用例规约](#322-用例规约)
 * [第四章 系统设计](#第四章-系统设计)
+	* [4.1 概述](#41-概述)
+	* [4.2 模型的设计](#42-模型的设计)
 * [结论](#结论)
 * [致谢语](#致谢语)
 * [参考文献](#参考文献)
@@ -302,6 +304,215 @@ rectangle 练习考试系统 {
 
 # 第四章 系统设计
 
+## 4.1 概述
+基于MongoDB的项目最开始要定义的就是数据模型，只要将数据的模型建立起来，就可以根据数据的结构特征来进行操作，由于试卷信息是一个结构化非常复杂，有很多层次的结构，所以使用非关系型数据库可以避免过多的表关联操作。在MongoDB中确定好数据的结构后，可以直接就给项目中的变量赋值，所以项目中的变量的结构在MongoDB的模型结构确定后基本就确定了。
+
+## 4.2 模型的设计
+在本项目中主要设计了3个模型，其中包括用于登录、注册的User，用于保存试卷信息的Paper和用于保存答题信息的Answer,下面用类图来表示各个模型的设计
+1. User模型
+
+```puml
+class User {
+	String nickname,
+	String email,
+	String password,
+	String avatar,
+	Date data
+}
+```
+
+2. Paper模型
+
+```puml
+class Paper {
+	String title,
+	String level,
+	Date data
+}
+
+class Writing {
+	String directions
+}
+
+class Listening {
+}
+
+class Section {
+	String sectionTitle
+}
+
+class Module {
+	String moduleSound
+}
+
+class ModuleSound{
+	String url
+}
+
+class Question {
+	String questionSound
+	Number rightAnswer
+	String [] options
+}
+
+class Reading {
+}
+
+class Sections {
+}
+
+class BankedCloze {
+	String passage
+	String [] options
+	Number [] rightOrder
+}
+
+class Locating {
+	String title
+	String [] paragraphs
+}
+
+class LocatingQuestion {
+	String questionContent
+	Number rightAnswer
+}
+
+class Selection {
+}
+
+class Passage {
+	String passageContent
+	String [] options
+	Number [] rightOrder
+}
+
+class PassageQuestion {
+	String questionContent
+	String [] options
+	Number rightAnswer
+}
+
+class Translation {
+	String question
+}
+
+Paper "1" *-- "1" Writing
+Paper "1" *-- "1" Listening
+Listening "1" *-- "many" Section
+Section "1" *-- "many" Module
+Module "1" *-- "many" Question
+Module "1" *-- "1" ModuleSound
+Paper "1" *-- "1" Reading
+Reading "1" *-- "many" Sections
+Sections "1" *-- "1" BankedCloze
+Sections "1" *-- "1" Locating
+Locating "1" *-- "many" LocatingQuestion
+Sections "1" *-- "1" Selection
+Selection "1" *-- "many" Passage
+Passage "1" *-- "many" PassageQuestion
+Paper "1" *-- "1" Translation
+
+```
+
+3. Answer模型
+
+```puml
+class Answer {
+	String title,
+	String level,
+	Date data
+}
+
+class Writing {
+	String directions
+	String essay
+	Number level
+}
+
+class Listening {
+}
+
+class Section {
+	String sectionTitle
+}
+
+class Module {
+	String moduleSound
+}
+
+class ModuleSound{
+	String url
+}
+
+class Question {
+	String questionSound
+	Number rightAnswer
+	String [] options
+	Number orderSelected
+}
+
+class Reading {
+}
+
+class Sections {
+}
+
+class BankedCloze {
+	String passage
+	String [] options
+	Number [] rightOrder
+	Number [] orderSelected
+}
+
+class Locating {
+	String title
+	String [] paragraphs
+}
+
+class LocatingQuestion {
+	String questionContent
+	Number rightAnswer
+	Number optionSelected
+}
+
+class Selection {
+}
+
+class Passage {
+	String passageContent
+	String [] options
+	Number [] rightOrder
+}
+
+class PassageQuestion {
+	String questionContent
+	String [] options
+	Number rightAnswer
+	Number optionSelected
+}
+
+class Translation {
+	String question
+	String answer
+	Number level
+}
+
+Answer "1" *-- "1" Writing
+Answer "1" *-- "1" Listening
+Listening "1" *-- "many" Section
+Section "1" *-- "many" Module
+Module "1" *-- "many" Question
+Module "1" *-- "1" ModuleSound
+Answer "1" *-- "1" Reading
+Reading "1" *-- "many" Sections
+Sections "1" *-- "1" BankedCloze
+Sections "1" *-- "1" Locating
+Locating "1" *-- "many" LocatingQuestion
+Sections "1" *-- "1" Selection
+Selection "1" *-- "many" Passage
+Passage "1" *-- "many" PassageQuestion
+Answer "1" *-- "1" Translation
+```
 
 # 结论
 
