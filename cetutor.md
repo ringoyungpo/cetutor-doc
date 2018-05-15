@@ -862,9 +862,10 @@ stop
 	* Node.js 8.11.1
 	* Express 4.16.3
 	* Mongoose 5.0.15
-- 编辑器及IDE：
+- 编辑器及IDE等开发工具：
 	* Visual Studio Code 1.22.2
 	* Atom 1.26.1
+	* Nuclide 0.302.0
 	* Android Studio 3.1.1
 - 运行环境：
 	* 实体机：OnePlus 3T Andriod 8.0
