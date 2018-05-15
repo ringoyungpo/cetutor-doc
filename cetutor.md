@@ -627,7 +627,7 @@ B -> E: 请求用户所有试卷
 E -> F: 查找该用户的所有试卷
 E <-- F: 返回该用户的所有试卷
 B <-- E: 返回用户所有试卷
-A <-- B: 现实用户所有的试卷
+A <-- B: 显示用户所有的试卷
 
 A -> B: 点击所要编辑试卷
 B -> C: 跳转到试卷编辑界面
@@ -660,7 +660,7 @@ B -> C: 请求用户所有试卷
 C -> E: 查找该用户的所有试卷
 C <-- E: 返回该用户的所有试卷
 B <-- C: 返回用户所有试卷
-A <-- B: 现实用户所有的试卷
+A <-- B: 显示用户所有的试卷
 
 A -> B: 点击所要删除试卷
 B -> D: 发送删除试卷请求
@@ -672,9 +672,121 @@ else 删除成功
 	D <[#green]-- E: 返回保存成功信息
 	B <[#green]-- D: 返回保存成功信息
 end
-A <[#green]-- C: 刷新管理台信息
+A <-- C: 刷新管理台信息
 ```
+移动端特有的时序图主要有以下三个：
+1.练习
+```puml
+actor 用户 as A
+participant "练习考试管理台页面" as B
+participant "练习界面" as C
+participant "获取试卷Api" as D
+participant "获取用户的所有试卷Api" as E
+participant "Paper Collection" as F
 
+
+A -> B: 进入管理台页面
+B -> E: 请求用户所有试卷
+E -> F: 查找该用户的所有试卷
+E <-- F: 返回该用户的所有试卷
+B <-- E: 返回用户所有试卷
+A <-- B: 显示用户所有的试卷
+
+A -> B: 点击所要练习试卷
+B -> C: 跳转到练习界面
+C -> D: 发送获取试卷请求
+D -> F: 获取试卷信息
+D <-- F: 返回试卷信息
+C <-- D: 返回试卷信息
+A <-- C: 显示练习界面
+loop 练习过程
+	A -> C: 答题
+	A <-- C: 反馈答题情况，包括分数和是否正确
+end
+```
+2.考试
+
+```puml
+actor 用户 as A
+participant "练习考试管理台页面" as B
+participant "考试界面" as C
+participant "提交预览界面" as G
+participant "获取试卷Api" as D
+participant "保存答案Api" as H
+participant "获取用户的所有试卷Api" as E
+participant "获取用户的所有答题试卷Api" as J
+participant "Paper Collection" as F
+participant "Answer Collection" as I
+
+A -> B: 进入管理台页面
+B -> E: 请求用户所有试卷
+E -> F: 查找该用户的所有试卷
+E <-- F: 返回该用户的所有试卷
+B <-- E: 返回用户所有试卷
+A <-- B: 显示用户所有的试卷
+
+A -> B: 点击所要考试试卷
+B -> C: 跳转到练习界面
+C -> D: 发送获取试卷请求
+D -> F: 获取试卷信息
+D <-- F: 返回试卷信息
+C <-- D: 返回试卷信息
+C -> C: 开始倒计时
+A <-- C: 显示考试界面
+alt 倒计时过程且答题未完成
+	loop 答题过程
+		A -> C: 答题
+		A <-- C: 反馈答题情况，不包括分数和是否正确
+	end
+else 倒计时结束或答题已经完成
+C -> G: 跳传到提交预览界面
+A <-- G: 显示答题情况，取消题目显示
+	alt 确认提交
+		A -> G: 点击提交按钮
+		G -> H: 请求保存用户答案
+		H -> I: 保存用户答案
+		H <-- I: 返回保存用户答案成功信息
+		G <-- H: 返回保存用户答案成功信息
+		G -> B: 跳转到练习考试管理台页面
+		B -> J: 请求用户所有答题试卷
+		J -> I: 查找该用户的所有答题试卷
+		J <-- I: 返回该用户的所有答题试卷
+		B <-- J: 返回用户所有答题试卷
+		A <-- B: 显示用户所有的答题试卷
+	else 不提交
+		A -> B: 请求练习考试管理台
+		A <-- B: 显示练习考试管理台
+	end
+end
+```
+3.考试记录查看
+```puml
+actor 用户 as A
+participant "练习考试管理台页面" as B
+participant "答题试卷回顾界面" as C
+participant "获取答题试卷Api" as D
+participant "获取用户的所有答题试卷Api" as J
+participant "Answer Collection" as I
+
+A -> B: 进入管理台页面
+B -> J: 请求用户所有答题试卷
+J -> I: 查找该用户的所有答题试卷
+J <-- I: 返回该用户的所有答题试卷
+B <-- J: 返回用户所有答题试卷
+A <-- B: 显示用户所有的答题试卷
+
+A -> B: 点击所要回顾的答题试卷
+B -> C: 跳转到答题试卷回顾界面
+C -> D: 发送获取答题试卷请求
+D -> I: 获取答题试卷信息
+D <-- I: 返回答题试卷信息
+C <-- D: 返回答题试卷信息
+A <-- C: 显示答题试卷回顾界面
+loop 校正过程
+	A -> C: 校正
+	A <-- C: 反馈答题情况，包括分数和是否正确
+end
+```
 
 # 结论
 
