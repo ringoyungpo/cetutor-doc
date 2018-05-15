@@ -39,6 +39,7 @@
 * [第五章 系统实现](#第五章-系统实现)
 	* [5.1 概述](#51-概述)
 	* [5.2 开发及运行环境](#52-开发及运行环境)
+	* [5.3 服务端搭建](#53-服务端搭建)
 * [结论](#结论)
 * [致谢语](#致谢语)
 * [参考文献](#参考文献)
@@ -67,7 +68,7 @@
 
 >
 
-现在比较新的技术栈就是使用 React 开发网页端，使用 React Native 开发移动端，使用 Node.js 作为后端提供 Api 服务，本课题系统通过这样的技术栈来开发一个英语学习 App 来实现对四六级英语实现练习和考试的功能。为了实现这个四六级练习和考试 app，还要实现题库管理功能，考试结果保存功能，评分系统，来及时反馈练习结果以及记录考试成绩和答题信息。
+现在比较新的技术栈就是使用 React 开发网页端，使用 React Native 开发移动端，使用 Node.js 作为后端提供 API 服务，本课题系统通过这样的技术栈来开发一个英语学习 App 来实现对四六级英语实现练习和考试的功能。为了实现这个四六级练习和考试 app，还要实现题库管理功能，考试结果保存功能，评分系统，来及时反馈练习结果以及记录考试成绩和答题信息。
 
 # 第二章 相关技术介绍
 
@@ -85,7 +86,7 @@ React 是前端的一个类库，能够使用 jsx 来写页面，与状态管理
 
 ## 2.3 Node.js 简介
 
-Node.js 通过使用 express 这样的后端框架，可以很快速地开发出想要的 api，并且通过与 mongoose 这样的工具在建立模型可以实现对于数据的基本验证，对于较为复杂的验证也可以自己写逻辑来实现，这样就能够实现对用户传送过来的数据进行校验和对应的反馈。
+Node.js 通过使用 express 这样的后端框架，可以很快速地开发出想要的 API，并且通过与 mongoose 这样的工具在建立模型可以实现对于数据的基本验证，对于较为复杂的验证也可以自己写逻辑来实现，这样就能够实现对用户传送过来的数据进行校验和对应的反馈。
 
 ## 2.4 MongoDB 简介
 
@@ -530,7 +531,7 @@ Answer "1" *-- "1" Translation
 ```puml
 actor 用户 as A
 participant "注册页面" as B
-participant "注册Api" as C
+participant "注册API" as C
 participant "User Collection" as D
 
 A -> B: 输入注册信息
@@ -564,7 +565,7 @@ end
 ```puml
 actor 用户 as A
 participant "登录页面" as B
-participant "登录Api" as C
+participant "登录API" as C
 participant "User Collection" as D
 
 A -> B: 输入登录信息
@@ -595,7 +596,7 @@ end
 actor 用户 as A
 participant "试卷管理台页面" as B
 participant "试卷编辑界面" as C
-participant "新增试卷Api" as D
+participant "新增试卷API" as D
 participant "Paper Collection" as E
 
 A -> B: 点击新增试卷按钮
@@ -621,8 +622,8 @@ end
 actor 用户 as A
 participant "试卷管理台页面" as B
 participant "试卷编辑界面" as C
-participant "修改试卷Api" as D
-participant "获取用户的所有试卷Api" as E
+participant "修改试卷API" as D
+participant "获取用户的所有试卷API" as E
 participant "Paper Collection" as F
 
 
@@ -655,8 +656,8 @@ end
 ```puml
 actor 用户 as A
 participant "试卷管理台页面" as B
-participant "获取用户的所有试卷Api" as C
-participant "删除试卷Api" as D
+participant "获取用户的所有试卷API" as C
+participant "删除试卷API" as D
 participant "Paper Collection" as E
 
 A -> B: 进入管理台页面
@@ -684,8 +685,8 @@ A <-- C: 刷新管理台信息
 actor 用户 as A
 participant "练习考试管理台页面" as B
 participant "练习界面" as C
-participant "获取试卷Api" as D
-participant "获取用户的所有试卷Api" as E
+participant "获取试卷API" as D
+participant "获取用户的所有试卷API" as E
 participant "Paper Collection" as F
 
 
@@ -715,9 +716,9 @@ actor 用户 as A
 participant "练习考试管理台页面" as B
 participant "考试界面" as C
 participant "提交预览界面" as G
-participant "获取试卷Api" as D
-participant "保存答案Api" as H
-participant "获取用户的所有试卷Api" as E
+participant "获取试卷API" as D
+participant "保存答案API" as H
+participant "获取用户的所有试卷API" as E
 participant "Paper Collection" as F
 participant "Answer Collection" as I
 
@@ -763,8 +764,8 @@ end
 actor 用户 as A
 participant "练习考试管理台页面" as B
 participant "答题试卷回顾界面" as C
-participant "获取答题试卷Api" as D
-participant "获取用户的所有答题试卷Api" as J
+participant "获取答题试卷API" as D
+participant "获取用户的所有答题试卷API" as J
 participant "Answer Collection" as I
 
 A -> B: 进入管理台页面
@@ -853,16 +854,24 @@ stop
 - 数据库：MongoDB 3.4.14
 - 服务器及域名代理商：Heroku
 - 技术栈：
-	* react-native 0.55.2
-	* react 16.3.2
-	* openjdk 1.8.0_171
-	* node.js 8.11.1
-	* express 4.16.3
-	* mongoose 5.0.15
+	* React Native 0.55.2
+	* React 16.3.2
+	* OpenJDK 1.8.0_171
+	* Node.js 8.11.1
+	* Express 4.16.3
+	* Mongoose 5.0.15
 - 编辑器及IDE：
 	* Visual Studio Code 1.22.2
 	* Atom 1.26.1
 	* Android Studio 3.1.1
+- 运行环境：
+	* 实体机：OnePlus 3T Andriod 8.0
+	* 模拟器：Pixel 2 Android 8.0
+	* 浏览器：Google Chrome 66.0.3359.170
+
+## 5.3 服务端搭建
+作为数据的中转站和数据的仓库，服务端除了搭建RESTful API以外，还要有一个存储数据的仓库。本项目使用Node.js搭建RESTful API，以及MongoDB来作为数据库。
+本项目MnongoDB使用的是mLab的服务，通过简单的注册，就能够在免费在mLab新建自己的MongoDB数据库，避免了需要自己租服务器搭建的码法。在API在本地调试好后，将后端代码传到Heroku的云平台上，就能够免费地使用Heroku来上线自己的RESTful API服务，这样就能通过Heroku的域名来访问API。通过简单的配置，使得网页端也能通过Heroku的域名访问，避免了自己要租服务器来搭建的麻烦。Heroku在更新代码的方式的通过git上传代码到Heroku上托管就行。
 
 
 # 结论
