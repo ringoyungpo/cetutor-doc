@@ -714,7 +714,6 @@ participant "提交预览界面" as G
 participant "获取试卷Api" as D
 participant "保存答案Api" as H
 participant "获取用户的所有试卷Api" as E
-participant "获取用户的所有答题试卷Api" as J
 participant "Paper Collection" as F
 participant "Answer Collection" as I
 
@@ -748,11 +747,7 @@ A <-- G: 显示答题情况，取消题目显示
 		H <-- I: 返回保存用户答案成功信息
 		G <-- H: 返回保存用户答案成功信息
 		G -> B: 跳转到练习考试管理台页面
-		B -> J: 请求用户所有答题试卷
-		J -> I: 查找该用户的所有答题试卷
-		J <-- I: 返回该用户的所有答题试卷
-		B <-- J: 返回用户所有答题试卷
-		A <-- B: 显示用户所有的答题试卷
+		A <-- B: 显示练习考试管理台页面
 	else 不提交
 		A -> B: 请求练习考试管理台
 		A <-- B: 显示练习考试管理台
