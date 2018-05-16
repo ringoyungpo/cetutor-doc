@@ -46,8 +46,7 @@
 	* [5.7 试卷编辑模块](#57-试卷编辑模块)
 	* [5.8 练习考试管理台模块](#58-练习考试管理台模块)
 	* [5.9 做题模块](#59-做题模块)
-* [结论](#结论)
-* [致谢语](#致谢语)
+* [致谢](#致谢)
 * [参考文献](#参考文献)
 
 <!-- /code_chunk_output -->
@@ -459,9 +458,10 @@ class ModuleSound{
 
 class Question {
 	String questionSound
+	Number optionSelected
 	Number rightAnswer
 	String [] options
-	Number orderSelected
+	
 }
 
 class Reading {
@@ -692,16 +692,16 @@ actor 用户 as A
 participant "练习考试管理台页面" as B
 participant "练习界面" as C
 participant "获取试卷API" as D
-participant "获取用户的所有试卷API" as E
+participant "获取所有试卷API" as E
 participant "Paper Collection" as F
 
 
 A -> B: 进入管理台页面
-B -> E: 请求用户所有试卷
-E -> F: 查找该用户的所有试卷
-E <-- F: 返回该用户的所有试卷
-B <-- E: 返回用户所有试卷
-A <-- B: 显示用户所有的试卷
+B -> E: 请求所有试卷
+E -> F: 查找所有试卷
+E <-- F: 返回所有试卷
+B <-- E: 返回所有试卷
+A <-- B: 显示所有的试卷
 
 A -> B: 点击所要练习试卷
 B -> C: 跳转到练习界面
@@ -724,16 +724,16 @@ participant "考试界面" as C
 participant "提交预览界面" as G
 participant "获取试卷API" as D
 participant "保存答案API" as H
-participant "获取用户的所有试卷API" as E
+participant "获取所有试卷API" as E
 participant "Paper Collection" as F
 participant "Answer Collection" as I
 
 A -> B: 进入管理台页面
-B -> E: 请求用户所有试卷
-E -> F: 查找该用户的所有试卷
-E <-- F: 返回该用户的所有试卷
-B <-- E: 返回用户所有试卷
-A <-- B: 显示用户所有的试卷
+B -> E: 请求所有试卷
+E -> F: 查找所有试卷
+E <-- F: 返回所有试卷
+B <-- E: 返回所有试卷
+A <-- B: 显示所有试卷
 
 A -> B: 点击所要考试试卷
 B -> C: 跳转到练习界面
